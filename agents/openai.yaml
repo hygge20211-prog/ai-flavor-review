@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 味设计评审"
+  short_description: "按具体证据评估界面的 AI 味，检查表达、主次、同构、边距与视觉平衡"
+  default_prompt: "请使用 $ai-flavor-review 评估这张界面的 AI 味，给出暂评分、具体证据、修改方向和待判项。"
