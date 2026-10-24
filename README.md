@@ -8,18 +8,37 @@
 
 ## 怎么用
 
-在支持 Agent Skills 的工具中，将包含 `SKILL.md` 的这一层目录命名为 `ai-flavor-review`，保留内部相对目录并整体安装。以支持项目技能目录的 Codex 环境为例，可放在项目的 `.agents/skills/ai-flavor-review/`；其他宿主按自身安装方式放置。`agents/openai.yaml` 是可选的 OpenAI 界面元数据，其他宿主可忽略。
+### 1. 让 Codex 帮你安装（推荐）
 
-安装后附上截图，并使用类似请求：
+把下面这段话复制给 Codex：
 
 ```text
-请使用 $ai-flavor-review 评估这张界面。
-用户任务：查看本月预算剩余。
-状态：正常使用；范围：完整首屏。
-请给出暂评分、具体证据、影响、修改方向和待判项。
+请使用 $skill-installer 安装 GitHub 仓库
+hygge20211-prog/ai-flavor-review 根目录的 Skill。
+
+仓库内路径为 .，安装名为 ai-flavor-review。
+请保留全部 references 文件和案例图片。
 ```
 
-比较时可以说：
+这个仓库的 `SKILL.md` 位于根目录，所以安装路径为 `.`，并明确安装名为 `ai-flavor-review`。安装器会下载完整的技能文件夹。安装完成后，在下一轮对话中使用；如果没有识别到新技能，重启 Codex。[OpenAI 官方安装说明](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)
+
+### 2. 上传截图并开始评审
+
+附上待评截图，把任务和状态换成你自己的情况，再发送：
+
+```text
+请使用 $ai-flavor-review 评估这张界面的 AI 味。
+
+用户任务：查看本月预算剩余。
+当前状态：正常使用。
+评估范围：截图中的完整首屏。
+
+请给出 0–10 的暂评分、具体证据、影响、修改方向和待判项。
+```
+
+分数越高，表示本框架下的问题越明显。输出会结合表达贡献、注意力分配、构成关系与视觉平衡解释原因，并区分已见证据、判断推测和无法判断的部分。
+
+比较两个页面时，附上两张图并发送：
 
 ```text
 请使用 $ai-flavor-review 比较这两个页面。
@@ -27,7 +46,22 @@
 分别评分，并说明哪些分差有证据、哪些来自任务差异。
 ```
 
-只有截图也可以开始：明确要求先做视觉暂评，标出任务假设与待判项。若宿主不支持技能安装，可提供 `SKILL.md` 和它引用的三个 Markdown 文件作为评审说明，并确保模型能读取这些文件及截图；这不等同于平台安装。
+只有截图也可以开始：请它先做视觉暂评，标明任务假设与待判项。没有背景的信息不会自动算作没有问题。
+
+### 手动安装
+
+1. 点击本仓库的 **Code → Download ZIP**，或直接[下载仓库 ZIP](https://github.com/hygge20211-prog/ai-flavor-review/archive/refs/heads/main.zip)。
+2. 解压后，将包含 `SKILL.md` 的这一层文件夹命名为 `ai-flavor-review`，保留 `agents/`、`references/` 等全部内容。
+3. 所有项目都要使用时，放入个人技能目录 `~/.agents/skills/ai-flavor-review/`；只给一个项目使用时，放入该项目的 `.agents/skills/ai-flavor-review/`。`~` 代表用户主目录。
+4. 确认 `SKILL.md` 直接位于上述目录中，再在下一轮对话使用 `$ai-flavor-review`。若未被识别，重启 Codex。
+
+这些是 Codex 的本地技能目录；其他支持 Agent Skills 的工具，按自身安装说明放置完整文件夹。`agents/openai.yaml` 是可选的 OpenAI 界面元数据，其他宿主可忽略。[OpenAI 官方技能目录说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
+
+### 只用 ChatGPT 网页版怎么办
+
+上面的本地目录步骤面向 Codex。只把 GitHub 链接贴进聊天，不代表已安装这个 Skill。
+
+如果当前对话支持文件和图片上传，可以先下载仓库，将 `SKILL.md`、`references/rubric.md`、`references/calibration-cases.md`、`references/output-format.md` 作为评审说明上传，并附上待评截图；需要对照案例时也提供相应案例图片。请模型先读取这些说明，再进行评审。这是按文档使用的方式，不等同于持久安装。
 
 ## 包里有什么
 
